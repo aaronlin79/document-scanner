@@ -1,0 +1,28 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual Environments
+.venv/
+venv/
+env/
+ENV/
+
+build/
+
+# Environments
+.env
+.env.*
+*.local
+
+# Ignore raw documents/images
+documents/raw/*
+!documents/raw/.gitkeep
+
+# Generated outputs
+outputs/*
+!outputs/.gitkeep
+
+# Keep 1 example
+# !data/raw/IMG_9094.JPG
