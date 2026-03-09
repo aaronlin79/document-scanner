@@ -21,13 +21,13 @@ class DetectionResult:
 
 def order_points(pts: np.ndarray) -> np.ndarray:
     pts = pts.astype(np.float32)
-    s = pts.sum(axis=1)          # x+y
-    diff = (pts[:, 0] - pts[:, 1])  # x-y
+    sorted_by_x = pts[np.argsort(pts[:, 0])]
 
-    tl = pts[np.argmin(s)]
-    br = pts[np.argmax(s)]
-    tr = pts[np.argmin(diff)]
-    bl = pts[np.argmax(diff)]
+    left  = sorted_by_x[:2]   # two leftmost points
+    right = sorted_by_x[2:]   # two rightmost points
+
+    tl, bl = left[np.argsort(left[:, 1])]
+    tr, br = right[np.argsort(right[:, 1])]
 
     return np.stack([tl, tr, br, bl], axis=0).astype(np.float32)
 

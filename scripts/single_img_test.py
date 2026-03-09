@@ -5,8 +5,9 @@ import cv2
 
 from src.io_handling import imread_color, ensure_dir
 from src.detect_page import detect_page_corners
-from src.threshholding import thresh_document
 
+from src.transform import warp_from_result
+from src.threshholding import thresh_document
 
 def main():
     ap = argparse.ArgumentParser()
@@ -50,6 +51,11 @@ def main():
     out_vis = str(Path(args.outdir) / "overlay_original.png")
     cv2.imwrite(out_vis, vis)
     print(f"Saved: {out_vis}")
+
+
+    warped = warp_from_result(img, result)
+    if warped is not None:
+        cv2.imwrite(str(Path(args.outdir) / "warped_document.png"), warped)
 
 
 if __name__ == "__main__":
