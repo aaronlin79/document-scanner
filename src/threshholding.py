@@ -12,7 +12,7 @@ def thresh_document(img):
 
     thresh_img = cv2.adaptiveThreshold(blur_img, 255,cv2.ADAPTIVE_THRESH_GAUSSIAN_C, cv2.THRESH_BINARY, 21, 10)
 
-    #Opening to clean small noise
+    # Opening to clean small noise
     kernel = np.ones((3,3), np.uint8)
     opened_img = cv2.morphologyEx(thresh_img, cv2.MORPH_OPEN, kernel)
 
