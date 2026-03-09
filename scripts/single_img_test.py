@@ -27,7 +27,7 @@ def main():
         print("corners: None (detection failed or rejected)")
         return
     
-    #Thresholding
+    # Thresholding
     thresh_img = thresh_document(img)
 
     out_scan = str(Path(args.outdir) / "thresh.png")
