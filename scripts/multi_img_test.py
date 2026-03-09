@@ -1,9 +1,11 @@
 import argparse
 import csv
 from pathlib import Path
+import cv2
 
 from src.io_handling import imread_color, ensure_dir
 from src.detect_page import detect_page_corners
+from src.threshholding import thresh_document
 
 
 IMG_EXTS = {".jpg", ".jpeg", ".png", ".bmp", ".tif", ".tiff", ".webp"}
@@ -51,6 +53,12 @@ def main():
             if success:
                 ok += 1
                 scores.append(result.score)
+
+                thresh_img = thresh_document(img)
+                out_scan_path = str(Path(args.outdir) / "Multi_img_thresh" / f"{fp.stem}_thresh.png")
+                
+                cv2.imwrite(out_scan_path, thresh_img)
+
             else:
                 if args.save_failures:
                     debug_dir = str(Path(args.outdir) / "failures" / fp.stem)

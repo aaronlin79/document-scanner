@@ -5,7 +5,9 @@ import cv2
 
 from src.io_handling import imread_color, ensure_dir
 from src.detect_page import detect_page_corners
+
 from src.transform import warp_from_result
+from src.threshholding import thresh_document
 
 def main():
     ap = argparse.ArgumentParser()
@@ -25,6 +27,13 @@ def main():
     if result.corners is None:
         print("corners: None (detection failed or rejected)")
         return
+    
+    # Thresholding
+    thresh_img = thresh_document(img)
+
+    out_scan = str(Path(args.outdir) / "thresh.png")
+    cv2.imwrite(out_scan, thresh_img)
+    print(f"Saved: {out_scan}")
 
     print("corners (original coords):")
     for i, (x, y) in enumerate(result.corners):
