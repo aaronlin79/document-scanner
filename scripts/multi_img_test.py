@@ -57,9 +57,10 @@ def main():
 
                 thresh_img = thresh_document(img)
                 warped_img = warp_from_result(thresh_img, result)
-                out_scan_path = str(Path(args.outdir) / "Multi_scan" / f"{fp.stem}_scanned.png")
+                out_scan_path = Path(args.outdir) / "Multi_scan" / f"{fp.stem}_scanned.png"
+                out_scan_path.parent.mkdir(parents=True, exist_ok=True)
                 
-                cv2.imwrite(out_scan_path, warped_img)
+                cv2.imwrite(str(out_scan_path), warped_img)
 
             else:
                 if args.save_failures:
