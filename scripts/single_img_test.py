@@ -28,13 +28,6 @@ def main():
         print("corners: None (detection failed or rejected)")
         return
     
-    # Thresholding
-    thresh_img = thresh_document(img)
-
-    out_scan = str(Path(args.outdir) / "thresh.png")
-    cv2.imwrite(out_scan, thresh_img)
-    print(f"Saved: {out_scan}")
-
     print("corners (original coords):")
     for i, (x, y) in enumerate(result.corners):
         print(f"  {i}: ({x:.1f}, {y:.1f})")
@@ -52,10 +45,16 @@ def main():
     cv2.imwrite(out_vis, vis)
     print(f"Saved: {out_vis}")
 
-
-    warped = warp_from_result(thresh_img, result)
+    warped = warp_from_result(img, result)
     if warped is not None:
-        cv2.imwrite(str(Path(args.outdir) / "scanned_doc.png"), warped)
+        cv2.imwrite(str(Path(args.outdir) / "cutout.png"), warped)
+
+    # Thresholding
+    thresh_img = thresh_document(warped)
+
+    out_scan = str(Path(args.outdir) / "scanned_doc.png")
+    cv2.imwrite(out_scan, thresh_img)
+    print(f"Saved: {out_scan}")
 
 
 if __name__ == "__main__":
