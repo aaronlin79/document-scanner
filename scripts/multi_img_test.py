@@ -49,6 +49,7 @@ def main():
     fg_ratios = []
     num_ccs = []
 
+
     with open(out_csv, "w", newline="") as f:
         writer = csv.writer(f)
         writer.writerow(["path", "method", "score", "success"])
@@ -65,11 +66,7 @@ def main():
             result = detect_page_corners(img, debug_dir=debug_dir, max_dim=args.max_dim, use_clahe=args.clahe)
 
             success = result.corners is not None
-            fg_ratio = 0.0
-            edge_density = 0.0
-            num_cc = 0
-         
-
+                    
             if success:
                 ok += 1
                 scores.append(result.score)
@@ -90,7 +87,6 @@ def main():
                 fg_ratios.append(fg_ratio)
                 num_ccs.append(num_cc)
             
-
             else:
                 if args.save_failures:
                     debug_dir = str(Path(args.outdir) / "failures" / fp.stem)
