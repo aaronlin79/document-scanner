@@ -2,15 +2,14 @@ import argparse
 import csv
 from pathlib import Path
 import cv2
+import numpy as np
 
 from src.io_handling import imread_color, ensure_dir
 from src.detect_page import detect_page_corners
 from src.threshholding import thresh_document
 from src.transform import warp_from_result
 
-
 IMG_EXTS = {".jpg", ".jpeg", ".png", ".bmp", ".tif", ".tiff", ".webp"}
-
 
 def iter_images(folder: str):
     p = Path(folder)
@@ -18,6 +17,19 @@ def iter_images(folder: str):
         if fp.suffix.lower() in IMG_EXTS:
             yield fp
 
+def compute_metrics(thresh_img: np.ndarray, gt_mask: np.ndarray = None):
+    metrics = {}
+
+    bin_img = (thresh_img < 127).astype(np.uint8)
+
+    # Fg ratio
+    metrics["fg_ratio"] = np.sum(bin_img) / bin_img.size
+
+    # Connected components
+    num_labels, labels, stats, centroids = cv2.connectedComponentsWithStats(bin_img)
+    metrics["num_cc"] = num_labels - 1
+
+    return metrics
 
 def main():
     ap = argparse.ArgumentParser()
@@ -34,6 +46,8 @@ def main():
     total = 0
     ok = 0
     scores = []
+    fg_ratios = []
+    num_ccs = []
 
     with open(out_csv, "w", newline="") as f:
         writer = csv.writer(f)
@@ -51,6 +65,11 @@ def main():
             result = detect_page_corners(img, debug_dir=debug_dir, max_dim=args.max_dim, use_clahe=args.clahe)
 
             success = result.corners is not None
+            fg_ratio = 0.0
+            edge_density = 0.0
+            num_cc = 0
+         
+
             if success:
                 ok += 1
                 scores.append(result.score)
@@ -63,18 +82,32 @@ def main():
                 
                 cv2.imwrite(str(out_scan_path), thresh_img)
 
+                metrics = compute_metrics(thresh_img)
+
+                fg_ratio = metrics["fg_ratio"]
+                num_cc = metrics["num_cc"]
+
+                fg_ratios.append(fg_ratio)
+                num_ccs.append(num_cc)
+            
+
             else:
                 if args.save_failures:
                     debug_dir = str(Path(args.outdir) / "failures" / fp.stem)
                     # rerun to save debug
                     _ = detect_page_corners(img, debug_dir=debug_dir, max_dim=args.max_dim, use_clahe=args.clahe)
 
-            writer.writerow([str(fp), result.method, f"{result.score:.4f}", int(success)])
+            writer.writerow([str(fp), result.method, f"{result.score:.4f}", int(success), fg_ratio, num_cc])
 
     avg_score = sum(scores) / len(scores) if scores else 0.0
+    avg_fg_ratio = sum(fg_ratios) / len(fg_ratios) if fg_ratios else 0.0
+    avg_num_cc = sum(num_ccs) / len(num_ccs) if num_ccs else 0.0
+
     print(f"Images: {total}")
     print(f"Success: {ok} ({(ok/total*100.0 if total else 0.0):.1f}%)")
     print(f"Avg score on successes: {avg_score:.3f}")
+    print(f"Avg Fg ratio: {avg_fg_ratio:.4f}")
+    print(f"Avg connected components: {avg_num_cc:.2f}")
     print(f"Log written to: {out_csv}")
 
 
