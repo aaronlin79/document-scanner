@@ -11,18 +11,29 @@ ENV/
 
 build/
 
+# macOS
+.DS_Store
+
+# Windows
+Thumbs.db
+
 # Environments
 .env
 .env.*
 *.local
 
-# Ignore raw documents/images
+# Ignore raw documents/images (including a few examples)
 documents/raw/*
 !documents/raw/.gitkeep
+!documents/raw/base.jpg
+!documents/raw/diagonal_view.jpg
+!documents/raw/redlight.jpg
+!documents/raw/GNHK_success.jpg
+!documents/raw/GNHK_fail.jpg
 
-# Generated outputs
+# Generated outputs (including a few examples)
+# Ignore all outputs by default
 outputs/*
 !outputs/.gitkeep
-
-# Keep 1 example
-# !data/raw/IMG_9094.JPG
+!outputs/reference/
+!outputs/reference/**

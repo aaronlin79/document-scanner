@@ -1,0 +1,6 @@
+path,method,score,success
+documents/raw/GNHK_fail.jpg,minAreaRect_rejected,0.0000,0,,
+documents/raw/GNHK_success.jpg,minAreaRect,0.6463,1,0.06431160341423088,942
+documents/raw/base.jpg,approxPolyDP,0.8903,1,0.046716984618311676,1101
+documents/raw/diagonal_view.jpg,approxPolyDP,0.6508,1,0.06376251327391393,1023
+documents/raw/redlight.jpg,approxPolyDP,0.8477,1,0.07223750950761232,399

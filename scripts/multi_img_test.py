@@ -76,7 +76,7 @@ def main():
                 warped_img = warp_from_result(img, result)
                 thresh_img = thresh_document(warped_img)
                 
-                out_scan_path = Path(args.outdir) / "Multi_scan" / f"{fp.stem}_scanned.png"
+                out_scan_path = Path(args.outdir) / "multi_scan" / f"{fp.stem}_scanned.png"
                 out_scan_path.parent.mkdir(parents=True, exist_ok=True)
                 
                 cv2.imwrite(str(out_scan_path), thresh_img)
