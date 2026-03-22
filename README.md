@@ -20,7 +20,7 @@ This project takes a photo of a document, detects the page boundary, corrects pe
 
 ### Single Image Scan:
 ```
-python -m scripts.single_img_test --img <img-path> --outdir <out-dir>
+python -m scripts.single_img_test --img <image-path> --outdir <output-dir>
 ```
 
 Example:
