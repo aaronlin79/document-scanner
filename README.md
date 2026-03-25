@@ -40,3 +40,10 @@ Example:
 ```
 python -m scripts.multi_img_test --input documents/raw  --outdir outputs/debug/eval
 ```
+
+
+## Future Work
+- Deep Learning Document Detection (e.g. YOLO, U-Nets)
+- Improved Corner Detection (e.g. learning-based keypoint detection, sub-pixel corner refinement)
+- Mobile/Real-Time Deployment
+- Intuitive User Interface
