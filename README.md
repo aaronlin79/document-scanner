@@ -47,3 +47,8 @@ python -m scripts.multi_img_test --input documents/raw  --outdir outputs/debug/e
 - Improved Corner Detection (e.g. learning-based keypoint detection, sub-pixel corner refinement)
 - Mobile/Real-Time Deployment
 - Intuitive User Interface
+
+
+## Acknowledgements
+
+This project was developed as part of **EE146 (Computer Vision)** at the University of California, Riverside, under the instruction of Professor Bir Bhanu, with guidance from Ankith Jain Rakesh Kumar.
