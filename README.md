@@ -1,6 +1,6 @@
 # Document Scanner
 
-A simple document scanner built with well-known computer vision methods in Python and OpenCV.
+A document scanner built with well-known computer vision methods in Python and OpenCV.
 
 This project takes a photo of a document, detects the page boundary, corrects perspective distortion, and produces a high-contrast scanned result. It was developed as part of a computer vision course (EE146 @ UCR) and focuses on implementing the full pipeline from edge detection to perspective rectification and document enhancement.
 
@@ -14,6 +14,20 @@ This project takes a photo of a document, detects the page boundary, corrects pe
 - Supports optional CLAHE preprocessing for difficult lighting conditions
 - Saves intermediate debugging artifacts such as grayscale, edges, closed edges, and detection overlays
 - Includes both single-image testing and batch evaluation scripts
+
+
+## Dataset
+
+This project uses the **GNHK (GoodNotes Handwriting Kollection)** dataset for evaluation and benchmarking of document boundary detection and perspective correction.
+
+The GNHK dataset consists of unconstrained, camera-captured images of English handwritten documents collected from diverse real-world environments. It is designed to reflect realistic variations in lighting, orientation, background clutter, and handwriting styles, making it well-suited for evaluating document analysis and computer vision pipelines.
+
+The dataset was introduced in:
+
+> Lee, A. W. C., Chung, J., & Lee, M. (2021). *GNHK: A Dataset for English Handwriting in the Wild*. ICDAR 2021.
+
+- Official page: https://www.goodnotes.com/gnhk/
+- GitHub repository: https://github.com/GoodNotes/GNHK-dataset
 
 
 ## Usage
